@@ -6,6 +6,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Print Powershell Version
+        shell: pwsh
+        run: $PSVersionTable
       - name: Install MSIX Packaging Tool
         env:
             MSIX_PACKAGING_TOOL_INSTALLTION_FILE_URL: ${{ vars.MSIX_PACKAGING_TOOL_INSTALLTION_FILE_URL }}
