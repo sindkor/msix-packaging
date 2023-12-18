@@ -17,4 +17,4 @@ jobs:
         run: .\scripts\Install-MsixPackagingTool.ps1 -MSIXPackagingToolInstallationFileUrl $env:MSIX_PACKAGING_TOOL_INSTALLTION_FILE_URL -MSIXPackagingToolLicenseFileUrl $env:MSIX_PACKAGING_TOOL_LICENSE_FILE_URL
       - name: Download Installtion File
         shell: pwsh
-        run: .\scripts\Download-InstallationFile.ps1 -InstallationFileUrl "https://download-installer.cdn.mozilla.net/pub/firefox/releases/120.0.1/win64/en-US/Firefox%20Setup%20120.0.1.msi" -InstallationFileChecksum "badchecksumtest" -DownloadFileName "Firefox Setup 120.0.1.msi"
+        run: .\scripts\Download-InstallationFile.ps1 -InstallationFileUrl "https://download-installer.cdn.mozilla.net/pub/firefox/releases/120.0.1/win64/en-US/Firefox%20Setup%20120.0.1.msi" -InstallationFileChecksum "29f478e79e35505c0a61df9fe1191264501efaeebe97214b49f2b1092af441ba" -DownloadFileName "Firefox Setup 120.0.1.msi"
