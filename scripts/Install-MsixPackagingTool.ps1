@@ -27,6 +27,7 @@ Invoke-WebRequest $MSIXPackagingToolInstallationFileUrl -OutFile $TempDirectoryP
 Invoke-WebRequest $MSIXPackagingToolLicenseFileUrl -OutFile $TempDirectoryPath\MSIXPackagingToolLicense.xml
 
 Add-AppxProvisionedPackage -Online -PackagePath $TempDirectoryPath\MSIXPackagingTool.msixbundle -LicensePath $TempDirectoryPath\MSIXPackagingToolLicense.xml
+Import-Module Appx
 $package = Get-AppxPackage -Name "Microsoft.MSIXPackagingTool"
 Write-Output "PackageFamilyName is $($package.PackageFamilyName)"
 $initalizeMsixPackagingToolCmd = "explorer.exe shell:AppsFolder\$($package.PackageFamilyName)!Msix.app"
