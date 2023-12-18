@@ -11,4 +11,4 @@ jobs:
             MSIX_PACKAGING_TOOL_INSTALLTION_FILE_URL: ${{env.MSIX_PACKAGING_TOOL_INSTALLTION_FILE_URL}}
             MSIX_PACKAGING_TOOL_LICENSE_FILE_URL: ${{env.MSIX_PACKAGING_TOOL_LICENSE_FILE_URL}}
         shell: pwsh
-        run: .\scripts\Install-MsixPackagingTool.ps1
+        run: .\scripts\Install-MsixPackagingTool.ps1 -MSIXPackagingToolInstallationFileUrl $env:MSIX_PACKAGING_TOOL_INSTALLTION_FILE_URL -MSIXPackagingToolLicenseFileUrl $env:MSIX_PACKAGING_TOOL_LICENSE_FILE_URL
