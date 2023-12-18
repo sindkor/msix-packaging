@@ -20,6 +20,13 @@ param(
     $TempDirectoryPath = "$env:TEMP\MSIXInstallationFiles"
 )
 
+if (Test-Path $TempDirectoryPath) {
+    Write-Output "Temp directory already exists"
+} else {
+    Write-Output "Creating temp directory"
+    New-Item -ItemType Directory $TempDirectoryPath
+}
+
 Write-Output "Downloading installation files"
 Invoke-WebRequest $InstallationFileUrl -OutFile "$TempDirectoryPath\$DownloadFileName"
 
