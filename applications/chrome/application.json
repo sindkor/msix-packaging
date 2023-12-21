@@ -1,6 +1,6 @@
 {
+    "TemplateXmlFileName": "GoogleChrome_69.244.49282.0_x64__arse7ec9eag5g_template.xml",
     "InstallationFileUrl": "https://dl.google.com/tag/s/appguid%3D%7B8A69D345-D564-463C-AFF1-A69D9E530F96%7D%26iid%3D%7B03FB4517-16BB-A8D8-7901-AE302CE9808F%7D%26lang%3Den%26browser%3D3%26usagestats%3D0%26appname%3DGoogle%2520Chrome%26needsadmin%3Dtrue%26ap%3Dx64-stable-statsdef_0%26brand%3DGCEA/dl/chrome/install/googlechromestandaloneenterprise64.msi",
     "InstallationFileChecksum": "8f0ca7ff64a504f8ca3c68ff0cc737dab43e376fbc9ed52b758a9ce3ba93ea5b",
-    "InstallationFileName": "googlechromestandaloneenterprise64.msi",
-    "TemplateXmlFileName": "GoogleChrome_69.244.49282.0_x64__arse7ec9eag5g_template.xml"
+    "InstallationFileName": "googlechromestandaloneenterprise64.msi"
 }
