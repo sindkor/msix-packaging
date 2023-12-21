@@ -12,7 +12,7 @@ param(
     # The file name to save the downloaded file as, e.g. InstallationFile.msi or InstallationPackage.zip
     [Parameter(Mandatory=$true)]
     [String]
-    $DownloadFileName,
+    $InstallationFileName,
 
     # Path to temp directory (will be created), defaults to $env:TEMP\MSIXInstallationFiles
     [Parameter(Mandatory=$false)]
@@ -28,15 +28,15 @@ if (Test-Path $TempDirectoryPath) {
 }
 
 Write-Output "Downloading installation files"
-Invoke-WebRequest $InstallationFileUrl -OutFile "$TempDirectoryPath\$DownloadFileName"
+Invoke-WebRequest $InstallationFileUrl -OutFile "$TempDirectoryPath\$InstallationFileName"
 
-if ($InstallationFileChecksum -eq (Get-FileHash "$TempDirectoryPath\$DownloadFileName" -Algorithm SHA256).Hash) {
+if ($InstallationFileChecksum -eq (Get-FileHash "$TempDirectoryPath\$InstallationFileName" -Algorithm SHA256).Hash) {
     Write-Output "File checksum match"
 } else {
     throw "Bad installation file checksum"
 }
 
-if ([IO.Path]::GetExtension("$TempDirectoryPath\$DownloadFileName") -eq ".zip") {
+if ([IO.Path]::GetExtension("$TempDirectoryPath\$InstallationFileName") -eq ".zip") {
     Write-Output "Downloaded file is a zip-file. Extracting contents to $TempDirectoryPath."
-    Expand-Archive -LiteralPath "$TempDirectoryPath\$DownloadFileName" -DestinationPath $TempDirectoryPath
+    Expand-Archive -LiteralPath "$TempDirectoryPath\$InstallationFileName" -DestinationPath $TempDirectoryPath
 }
