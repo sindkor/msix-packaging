@@ -30,6 +30,7 @@ jobs:
           Write-Output "InstallationFileChecksum=$($app.InstallationFileChecksum)" >> $GITHUB_OUTPUT
           Write-Output "InstallationFileName=$($app.InstallationFileName)" >> $GITHUB_OUTPUT
           Write-Output "ApplicationName=${{matrix.template}}.Split("/")[-1]" >> $GITHUB_OUTPUT
+          Get-Content $GITHUB_OUTPUT
       - name: Install MSIX Packaging Tool
         env:
             MSIX_PACKAGING_TOOL_INSTALLTION_FILE_URL: ${{ vars.MSIX_PACKAGING_TOOL_INSTALLTION_FILE_URL }}
