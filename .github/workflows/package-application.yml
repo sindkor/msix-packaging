@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: set-matrix
-        run: echo "matrix=$(ls applications/*/application.json | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
+        run: echo "matrix=$(cat applications/*/application.json | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
   build:
     needs: create-matrix
     runs-on: windows-latest
@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Print Template
         shell: pwsh
-        run: Get-Content ${{ matrix.template }}
+        run: Write-Output ${{ matrix.template }}
       # - name: Install MSIX Packaging Tool
       #   env:
       #       MSIX_PACKAGING_TOOL_INSTALLTION_FILE_URL: ${{ vars.MSIX_PACKAGING_TOOL_INSTALLTION_FILE_URL }}
