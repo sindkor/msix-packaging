@@ -25,11 +25,12 @@ jobs:
         shell: pwsh
         run: |
           $app=(Get-Content -Raw  ${{matrix.template}}/application.json | ConvertFrom-Json)
+          $appName=${{matrix.template}}.Split("/")[-1]
           Write-Output "TEMPLATE_XML_FILE_NAME=$($app.TemplateXmlFileName)" >> $env:GITHUB_ENV
           Write-Output "INSTALLATION_FILE_URL=$($app.InstallationFileUrl)" >> $env:GITHUB_ENV
           Write-Output "INSTALLATION_FILE_CHECKSUM=$($app.InstallationFileChecksum)" >> $env:GITHUB_ENV
           Write-Output "INSTALLATION_FILE_NAME=$($app.InstallationFileName)" >> $env:GITHUB_ENV
-          Write-Output "ApplicationName=${{matrix.template}}.Split("/")[-1]" >> $env:GITHUB_ENV
+          Write-Output "ApplicationName=$appName" >> $env:GITHUB_ENV
           Get-Content $env:GITHUB_ENV
       - name: Install MSIX Packaging Tool
         env:
