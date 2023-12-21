@@ -20,7 +20,11 @@ jobs:
         uses: actions/checkout@v4
       - name: Print Template
         shell: pwsh
-        run: Write-Output ${{ matrix.template }}
+        run: |
+          Write-Output "InstallationFileUrl: ${{ matrix.template.InstallationFileUrl }}" 
+          Write-Output "InstallationFileChecksum: ${{ matrix.template.InstallationFileChecksum }}"
+          Write-Output "InstallationFileName: ${{ matrix.template.InstallationFileName }}"
+          Write-Output "TemplateXmlFileName: ${{ matrix.template.TemplateXmlFileName }}"
       # - name: Install MSIX Packaging Tool
       #   env:
       #       MSIX_PACKAGING_TOOL_INSTALLTION_FILE_URL: ${{ vars.MSIX_PACKAGING_TOOL_INSTALLTION_FILE_URL }}
