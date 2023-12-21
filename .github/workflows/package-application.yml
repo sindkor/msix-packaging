@@ -20,13 +20,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Print Template
+      - name: Get Template Values
+        id: get-values
         shell: pwsh
         run: |
-          Write-Output "InstallationFileUrl: ${{ matrix.template.InstallationFileUrl }}" 
-          Write-Output "InstallationFileChecksum: ${{ matrix.template.InstallationFileChecksum }}"
-          Write-Output "InstallationFileName: ${{ matrix.template.InstallationFileName }}"
-          Write-Output "TemplateXmlFileName: ${{ matrix.template.TemplateXmlFileName }}"
+          $app=(Get-Content -Raw  ${{matrix.template}}/application.json | ConvertFrom-Json)
+          Write-Output "TemplateXmlFileName=$($app.TemplateXmlFileName)" >> $GITHUB_OUTPUT
+          Write-Output "InstallationFileUrl=$($app.InstallationFileUrl)" >> $GITHUB_OUTPUT
+          Write-Output "InstallationFileChecksum=$($app.InstallationFileChecksum)" >> $GITHUB_OUTPUT
+          Write-Output "InstallationFileName=$($app.InstallationFileName)" >> $GITHUB_OUTPUT
+          Write-Output "ApplicationName=${{matrix.template}}.Split("/")[-1]" >> $GITHUB_OUTPUT
       - name: Install MSIX Packaging Tool
         env:
             MSIX_PACKAGING_TOOL_INSTALLTION_FILE_URL: ${{ vars.MSIX_PACKAGING_TOOL_INSTALLTION_FILE_URL }}
@@ -35,4 +38,4 @@ jobs:
         run: .\scripts\Install-MsixPackagingTool.ps1 -MSIXPackagingToolInstallationFileUrl $env:MSIX_PACKAGING_TOOL_INSTALLTION_FILE_URL -MSIXPackagingToolLicenseFileUrl $env:MSIX_PACKAGING_TOOL_LICENSE_FILE_URL
       - name: Download Installtion File
         shell: pwsh
-        run: .\scripts\Download-InstallationFile.ps1 -InstallationFileUrl "${{ matrix.template.InstallationFileUrl }}" -InstallationFileChecksum "${{ matrix.template.InstallationFileChecksum }}" -InstallationFileName "${{ matrix.template.InstallationFileName }}"
+        run: .\scripts\Download-InstallationFile.ps1 -InstallationFileUrl "${{ steps.get-values.outputs.InstallationFileUrl }}" -InstallationFileChecksum "${{ steps.get-values.outputs.InstallationFileChecksum }}" -InstallationFileName "${{ steps.get-values.outputs.InstallationFileName }}"
