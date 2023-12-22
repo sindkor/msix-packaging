@@ -74,6 +74,6 @@ jobs:
         with:
           azPSVersion: "latest"
           inlineScript: |
-            $token = (Get-AzAccessToken -ResourceTypeName KeyVault).Token
+            $token = (Get-AzAccessToken -ResourceTypeName KeyVault).UserId 
             Write-Output "::add-mask::$token"
             Write-Output "KV_TOKEN=$token" >> $env:GITHUB_ENV
