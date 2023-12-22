@@ -37,9 +37,5 @@ Invoke-Expression $initalizeMsixPackagingToolCmd
 Write-Output "Waiting 5 seconds to allow MSIX Tool to initialize"
 Start-Sleep 5
 
-Write-Output "Copying signtool to path"
-Copy-Item "$($package.InstallLocation)\SDK\signtool.exe" "$([Environment]::SystemDirectory)\signtool.exe"
-
 Write-Output "Verifying required tools are accesible"
 Invoke-Expression "MsixPackagingTool.exe --version"
-Invoke-Expression "signtool.exe sign /?"

@@ -44,6 +44,8 @@ jobs:
             MSIX_PACKAGING_TOOL_LICENSE_FILE_URL: ${{ vars.MSIX_PACKAGING_TOOL_LICENSE_FILE_URL }}
         shell: pwsh
         run: .\scripts\Install-MsixPackagingTool.ps1 -MSIXPackagingToolInstallationFileUrl $env:MSIX_PACKAGING_TOOL_INSTALLTION_FILE_URL -MSIXPackagingToolLicenseFileUrl $env:MSIX_PACKAGING_TOOL_LICENSE_FILE_URL
+      - name: Install AzureSignTool
+        run: dotnet tool install --global AzureSignTool
       - name: Download Installtion File
         shell: pwsh
         run: .\scripts\Download-InstallationFile.ps1 -InstallationFileUrl $env:INSTALLATION_FILE_URL -InstallationFileChecksum $env:INSTALLATION_FILE_CHECKSUM -InstallationFileName $env:INSTALLATION_FILE_NAME
