@@ -18,6 +18,8 @@ jobs:
         # run: echo "matrix=$(git --no-pager diff --dirstat=files,0 HEAD~1 -- `find . -type d -name 'applications'` | sed -E 's/^[ 0-9.]+% //g' | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
         run: echo "matrix=$(ls -d applications/* | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
   build:
+    permissions:
+      id-token: write
     needs: create-matrix
     runs-on: windows-latest
     if: ${{ needs.create-matrix.outputs.matrix != '[]' && needs.create-matrix.outputs.matrix != '' }}
