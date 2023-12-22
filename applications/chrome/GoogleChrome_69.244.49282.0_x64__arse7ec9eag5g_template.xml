@@ -298,6 +298,6 @@
   </Settings>
   <PrepareComputer DisableWindowsUpdateService="true" />
   <SaveLocation PackagePath="C:\Users\azureadmin\Desktop\GoogleChrome_69.244.49282.0_x64__arse7ec9eag5g.msix" TemplatePath="C:\Users\azureadmin\Desktop\GoogleChrome_69.244.49282.0_x64__arse7ec9eag5g_template.xml" />
-  <Installer Path="C:\Users\azureadmin\Downloads\googlechromestandaloneenterprise64.msi" Arguments="/q" />
+  <Installer Path="" Arguments="/q" />
   <PackageInformation PackageName="GoogleChrome" PackageDisplayName="Google Chrome" PublisherName="CN=SelfSigned" PublisherDisplayName="Google LLC" Version="69.244.49282.0" p4:PackageDescription="Google Chrome" xmlns:p4="http://schemas.microsoft.com/msix/msixpackagingtool/template/1910" />
 </MsixPackagingToolTemplate>
