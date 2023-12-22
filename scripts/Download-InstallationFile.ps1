@@ -33,6 +33,7 @@ Invoke-WebRequest $InstallationFileUrl -OutFile "$TempDirectoryPath\$Installatio
 if ($InstallationFileChecksum -eq (Get-FileHash "$TempDirectoryPath\$InstallationFileName" -Algorithm SHA256).Hash) {
     Write-Output "File checksum match"
 } else {
+    Remove-Item "$TempDirectoryPath\$InstallationFileName"
     throw "Bad installation file checksum"
 }
 
