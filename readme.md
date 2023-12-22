@@ -23,4 +23,4 @@ The goal of this project is to have a fully automatic package application workfl
 - [ ] Automatically update public applications when new releases comes
 
 ### Acknowledgments 
-Uses AzureSignTool by @vcsjones. Thanks!
+Uses [vcsjones/AzureSignTool](https://github.com/vcsjones/AzureSignTool). Thanks!
