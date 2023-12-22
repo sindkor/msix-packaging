@@ -17,8 +17,11 @@ param(
 
 Write-Output "Updating XML file..."
 $templateFile = [xml](Get-Content -Path $ApplicationTemplateFilePath)
+Write-Output "Setting Installer.Path = $InstallationFilePath"
 $templateFile.MsixPackagingToolTemplate.Installer.Path = $InstallationFilePath
+Write-Output "Setting SaveLocation.PackagePath = $MSIXOutputFilePath"
 $templateFile.MsixPackagingToolTemplate.SaveLocation.PackagePath = $MSIXOutputFilePath
+Write-Output "Setting SaveLocation.TemplatePath = $ApplicationTemplateFilePath"
 $templateFile.MsixPackagingToolTemplate.SaveLocation.TemplatePath = $ApplicationTemplateFilePath
 $templateFile.Save($ApplicationTemplateFilePath)
 Write-Output "XML file updated."
