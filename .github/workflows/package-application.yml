@@ -33,7 +33,7 @@ jobs:
         shell: pwsh
         run: |
           $app=(Get-Content -Raw  ${{matrix.template}}/application.json | ConvertFrom-Json)
-          $appName="${{matrix.template}}".Split("/")[-2]
+          $appName="${{matrix.template}}".Split("/")[1]
           Write-Output "TEMPLATE_XML_FILE_NAME=$($app.TemplateXmlFileName)" >> $env:GITHUB_ENV
           Write-Output "INSTALLATION_FILE_URL=$($app.InstallationFileUrl)" >> $env:GITHUB_ENV
           Write-Output "INSTALLATION_FILE_CHECKSUM=$($app.InstallationFileChecksum)" >> $env:GITHUB_ENV
@@ -47,7 +47,9 @@ jobs:
         shell: pwsh
         run: .\scripts\Install-MsixPackagingTool.ps1 -MSIXPackagingToolInstallationFileUrl $env:MSIX_PACKAGING_TOOL_INSTALLTION_FILE_URL -MSIXPackagingToolLicenseFileUrl $env:MSIX_PACKAGING_TOOL_LICENSE_FILE_URL
       - name: Install AzureSignTool
-        run: dotnet tool install --global AzureSignTool
+        run: |
+          dotnet tool install --global AzureSignTool
+          AzureSignTool --help
       - name: Download Installtion File
         shell: pwsh
         run: .\scripts\Download-InstallationFile.ps1 -InstallationFileUrl $env:INSTALLATION_FILE_URL -InstallationFileChecksum $env:INSTALLATION_FILE_CHECKSUM -InstallationFileName $env:INSTALLATION_FILE_NAME
