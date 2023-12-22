@@ -11,9 +11,9 @@ The goal of this project is to have a fully automatic package application workfl
  - Updating an application is as simple as changing a few parameters.
 
 ### Roadmap
-- [X] Programmatically install MSIX Packaging Tool and Signtool in the runner.
+- [X] Programmatically install MSIX Packaging Tool in the runner.
 - [X] Start one runner per application.
-- [ ] Avoid unnecessarily packaging applications without changes.
+- [X] Avoid unnecessarily packaging applications without changes.
 - [ ] Signing with PFX from an Azure Key Vault
 - [X] Download installation files from HTTPS
 - [ ] Download installation files from Azure Blob using identity-based authentication
@@ -21,3 +21,6 @@ The goal of this project is to have a fully automatic package application workfl
 - [ ] Uploading application MSIX file to Azure Files
 - [ ] Uploading application MSIX file to Azure Blob
 - [ ] Automatically update public applications when new releases comes
+
+### Acknowledgments 
+Uses AzureSignTool by @vcsjones. Thanks!
