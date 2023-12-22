@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: set-matrix
-        run: echo "matrix=$(ls -d applications/* | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
+        run: echo "matrix=$(git --no-pager diff --dirstat=files,0 HEAD~1 -- `find . -type d -name 'applications'` | sed -E 's/^[ 0-9.]+% //g' | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
   build:
     needs: create-matrix
     runs-on: windows-latest
@@ -26,7 +26,7 @@ jobs:
         shell: pwsh
         run: |
           $app=(Get-Content -Raw  ${{matrix.template}}/application.json | ConvertFrom-Json)
-          $appName="${{matrix.template}}".Split("/")[-1]
+          $appName="${{matrix.template}}".Split("/")[-2]
           Write-Output "TEMPLATE_XML_FILE_NAME=$($app.TemplateXmlFileName)" >> $env:GITHUB_ENV
           Write-Output "INSTALLATION_FILE_URL=$($app.InstallationFileUrl)" >> $env:GITHUB_ENV
           Write-Output "INSTALLATION_FILE_CHECKSUM=$($app.InstallationFileChecksum)" >> $env:GITHUB_ENV
