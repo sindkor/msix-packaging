@@ -43,8 +43,4 @@ jobs:
         run: .\scripts\Download-InstallationFile.ps1 -InstallationFileUrl $env:INSTALLATION_FILE_URL -InstallationFileChecksum $env:INSTALLATION_FILE_CHECKSUM -InstallationFileName $env:INSTALLATION_FILE_NAME
       - name: Package Application
         shell: pwsh
-        run: |
-          .\scripts\Package-Application.ps1 `
-            -InstallationFilePath "$env:TEMP\MSIXInstallationFiles\$env:INSTALLATION_FILE_NAME" `
-            -ApplicationTemplateFilePath ".\applications\$env:APPLICATION_NAME\$env:TEMPLATE_XML_FILE_NAME" `
-            -MSIXOutputFilePath ".\out\$env:APPLICATION_NAME.msix"
+        run: .\scripts\Package-Application.ps1 -InstallationFilePath "$env:TEMP\MSIXInstallationFiles\$env:INSTALLATION_FILE_NAME" -ApplicationTemplateFilePath ".\applications\$env:APPLICATION_NAME\$env:TEMPLATE_XML_FILE_NAME" -MSIXOutputFilePath ".\out\$env:APPLICATION_NAME.msix"
