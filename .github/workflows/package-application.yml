@@ -15,6 +15,7 @@ jobs:
     needs: create-matrix
     runs-on: windows-latest
     strategy:
+      fail-fast: false
       matrix:
         template: ${{ fromJson(needs.create-matrix.outputs.matrix) }}
     steps:
