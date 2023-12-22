@@ -8,8 +8,12 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v4
-      - id: set-matrix
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Create matrix
+        id: set-matrix
         run: echo "matrix=$(git --no-pager diff --dirstat=files,0 HEAD^ -- `find . -type d -name 'applications'` | sed -E 's/^[ 0-9.]+% //g' | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
   build:
     needs: create-matrix
