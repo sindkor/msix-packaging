@@ -28,4 +28,4 @@ Write-Output "XML file updated."
 
 $createPackageCmd = "MsixPackagingTool.exe create-package --template $ApplicationTemplateFilePath -v"
 Write-Output "Executing $createPackageCmd"
-Invoke-Command $createPackageCmd
+Invoke-Expression $createPackageCmd
