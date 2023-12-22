@@ -74,7 +74,7 @@ jobs:
         with:
           azPSVersion: "latest"
           inlineScript: |
-            $token = (Get-AzAccessToken -ResourceTypeName KeyVault).UserId 
+            $token = (Get-AzAccessToken -ResourceTypeName KeyVault).Token 
             Write-Output "::add-mask::$token"
             Write-Output "KV_TOKEN=$token" >> $env:GITHUB_ENV
       - name: Sign Application
@@ -82,7 +82,7 @@ jobs:
         run: |
           AzureSignTool.exe sign `
             --azure-key-vault-url "https://msixpackagingcert.vault.azure.net/" `
-            --azure-key-vault-url "$env:KV_TOKEN" `
+            --azure-key-vault-accesstoken "$env:KV_TOKEN" `
             --azure-key-vault-certificate "msix-signing" `
             --file-digest "sha256" `
             --verbose `
