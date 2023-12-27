@@ -77,13 +77,19 @@ jobs:
             $token = (Get-AzAccessToken -ResourceTypeName KeyVault).Token 
             Write-Output "::add-mask::$token"
             Write-Output "KV_TOKEN=$token" >> $env:GITHUB_ENV
+      - name: Upload MSIX artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: |
+            ./out/*.msix
       - name: Sign Application
         shell: pwsh
         run: |
+          $msixFilePath = ".\out\$env:APPLICATION_NAME.msix"
           AzureSignTool.exe sign `
             --azure-key-vault-url "https://msixpackagingcert.vault.azure.net/" `
             --azure-key-vault-accesstoken "$env:KV_TOKEN" `
             --azure-key-vault-certificate "msix-signing" `
             --file-digest "sha256" `
             --verbose `
-            --input-file-list ".\out\$env:APPLICATION_NAME.msix"
+            --input-file-list $msixFilePath
