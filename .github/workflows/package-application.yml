@@ -81,11 +81,12 @@ jobs:
         shell: pwsh
         env:
           AZ_KV_URL: ${{ vars.AZ_KV_URL }}
+          KV_CERT_NAME: ${{ vars.KV_CERT_NAME }}
         run: |
           AzureSignTool.exe sign `
             --azure-key-vault-url "$env:AZ_KV_URL" `
             --azure-key-vault-accesstoken "$env:KV_TOKEN" `
-            --azure-key-vault-certificate "msix-signing" `
+            --azure-key-vault-certificate "$env:KV_CERT_NAME" `
             --file-digest "sha256" `
             --verbose `
             ".\out\$env:APPLICATION_NAME.msix"
