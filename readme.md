@@ -14,11 +14,11 @@ The goal of this project is to have a fully automatic package application workfl
 - [X] Programmatically install MSIX Packaging Tool in the runner.
 - [X] Start one runner per application.
 - [X] Avoid unnecessarily packaging applications without changes.
-- [ ] Signing with PFX from an Azure Key Vault
+- [X] Signing with PFX from an Azure Key Vault
 - [X] Download installation files from HTTPS
 - [ ] Download installation files from Azure Blob using identity-based authentication
 - [ ] Download multiple installation files per application, e.g. through a ZIP-package
-- [ ] Uploading application MSIX file to Azure Files
+- [X] Uploading application MSIX file to Azure Files
 - [ ] Uploading application MSIX file to Azure Blob
 - [ ] Automatically update public applications when new releases comes
 

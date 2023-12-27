@@ -89,3 +89,17 @@ jobs:
             --file-digest "sha256" `
             --verbose `
             ".\out\$env:APPLICATION_NAME.msix"
+      - name: Upload MSIX to Azure Files
+        uses: azure/powershell@v1
+        env:
+          AZ_SA_NAME: ${{ vars.AZ_SA_NAME }}
+          AZ_SA_MSIX_FILESHARE_NAME: ${{ vars.AZ_SA_MSIX_FILESHARE_NAME }}
+        with:
+          azPSVersion: "latest"
+          inlineScript: |
+            $storageContext = New-AzStorageContext -StorageAccountName "$env:AZ_SA_NAME"
+            Set-AzStorageFileContent `
+              -Context $storageContext `
+              -ShareName "$env:AZ_SA_MSIX_FILESHARE_NAME" `
+              -Source ".\out\$env:APPLICATION_NAME.msix"
+              -Path "$env:APPLICATION_NAME.msix"
