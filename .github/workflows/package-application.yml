@@ -62,21 +62,26 @@ jobs:
             -InstallationFilePath "$env:TEMP\MSIXInstallationFiles\$env:INSTALLATION_FILE_NAME" `
             -ApplicationTemplateFilePath ".\applications\$env:APPLICATION_NAME\$env:TEMPLATE_XML_FILE_NAME" `
             -MSIXOutputFilePath ".\out\$env:APPLICATION_NAME.msix"
-      - name: Azure login
-        uses: azure/login@v1
+      - name: Upload MSIX artifact
+        uses: actions/upload-artifact@v3
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          enable-AzPSSession: true
-      - name: Get access token
-        uses: azure/powershell@v1
-        with:
-          azPSVersion: "11.1.0"
-          inlineScript: |
-            $token = (Get-AzAccessToken -ResourceTypeName KeyVault).Token 
-            Write-Output "::add-mask::$token"
-            Write-Output "KV_TOKEN=$token" >> $env:GITHUB_ENV
+          path: |
+            ./out/*.msix
+      # - name: Azure login
+      #   uses: azure/login@v1
+      #   with:
+      #     client-id: ${{ secrets.AZURE_CLIENT_ID }}
+      #     tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+      #     subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      #     enable-AzPSSession: true
+      # - name: Get access token
+      #   uses: azure/powershell@v1
+      #   with:
+      #     azPSVersion: "11.1.0"
+      #     inlineScript: |
+      #       $token = (Get-AzAccessToken -ResourceTypeName KeyVault).Token 
+      #       Write-Output "::add-mask::$token"
+      #       Write-Output "KV_TOKEN=$token" >> $env:GITHUB_ENV
       # - name: Sign Application
       #   shell: pwsh
       #   env:
@@ -89,19 +94,19 @@ jobs:
       #       --azure-key-vault-certificate "$env:KV_CERT_NAME" `
       #       --file-digest "sha256" `
       #       --verbose `
-      #       ".\out\$env:APPLICATION_NAME.msix"
-      - name: Upload MSIX to Azure Files
-        uses: azure/powershell@v1
-        env:
-          AZ_SA_NAME: ${{ vars.AZ_SA_NAME }}
-          AZ_SA_MSIX_FILESHARE_NAME: ${{ vars.AZ_SA_MSIX_FILESHARE_NAME }}
-        with:
-          azPSVersion: "11.1.0"
-          inlineScript: |
-            $storageContext = New-AzStorageContext -StorageAccountName "$env:AZ_SA_NAME" -EnableFileBackupRequestIntent
-            Set-AzStorageFileContent `
-              -Context $storageContext `
-              -ShareName "$env:AZ_SA_MSIX_FILESHARE_NAME" `
-              -Source ".\out\$env:APPLICATION_NAME.msix" `
-              -Path "$env:APPLICATION_NAME.msix" `
-              -Force
+      # #       ".\out\$env:APPLICATION_NAME.msix"
+      # - name: Upload MSIX to Azure Files
+      #   uses: azure/powershell@v1
+      #   env:
+      #     AZ_SA_NAME: ${{ vars.AZ_SA_NAME }}
+      #     AZ_SA_MSIX_FILESHARE_NAME: ${{ vars.AZ_SA_MSIX_FILESHARE_NAME }}
+      #   with:
+      #     azPSVersion: "11.1.0"
+      #     inlineScript: |
+      #       $storageContext = New-AzStorageContext -StorageAccountName "$env:AZ_SA_NAME" -EnableFileBackupRequestIntent
+      #       Set-AzStorageFileContent `
+      #         -Context $storageContext `
+      #         -ShareName "$env:AZ_SA_MSIX_FILESHARE_NAME" `
+      #         -Source ".\out\$env:APPLICATION_NAME.msix" `
+      #         -Path "$env:APPLICATION_NAME.msix" `
+      #         -Force
