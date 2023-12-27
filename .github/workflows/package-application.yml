@@ -97,7 +97,7 @@ jobs:
         with:
           azPSVersion: "latest"
           inlineScript: |
-            $storageContext = New-AzStorageContext -StorageAccountName "$env:AZ_SA_NAME" -UseConnectedAccount
+            $storageContext = New-AzStorageContext -StorageAccountName "$env:AZ_SA_NAME" -EnableFileBackupRequestIntent
             Set-AzStorageFileContent `
               -Context $storageContext `
               -ShareName "$env:AZ_SA_MSIX_FILESHARE_NAME" `
