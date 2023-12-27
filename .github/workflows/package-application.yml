@@ -79,9 +79,11 @@ jobs:
             Write-Output "KV_TOKEN=$token" >> $env:GITHUB_ENV
       - name: Sign Application
         shell: pwsh
+        env:
+          AZ_KV_URL: ${{ vars.AZ_KV_URL }}
         run: |
           AzureSignTool.exe sign `
-            --azure-key-vault-url "https://msixpackagingcert.vault.azure.net/" `
+            --azure-key-vault-url "$env:AZ_KV_URL" `
             --azure-key-vault-accesstoken "$env:KV_TOKEN" `
             --azure-key-vault-certificate "msix-signing" `
             --file-digest "sha256" `
