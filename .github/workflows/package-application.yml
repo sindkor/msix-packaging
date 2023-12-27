@@ -101,5 +101,5 @@ jobs:
             Set-AzStorageFileContent `
               -Context $storageContext `
               -ShareName "$env:AZ_SA_MSIX_FILESHARE_NAME" `
-              -Source ".\out\$env:APPLICATION_NAME.msix"
+              -Source ".\out\$env:APPLICATION_NAME.msix" `
               -Path "$env:APPLICATION_NAME.msix"
