@@ -72,7 +72,7 @@ jobs:
       - name: Get access token
         uses: azure/powershell@v1
         with:
-          azPSVersion: "latest"
+          azPSVersion: "11.1.0"
           inlineScript: |
             $token = (Get-AzAccessToken -ResourceTypeName KeyVault).Token 
             Write-Output "::add-mask::$token"
@@ -95,7 +95,7 @@ jobs:
           AZ_SA_NAME: ${{ vars.AZ_SA_NAME }}
           AZ_SA_MSIX_FILESHARE_NAME: ${{ vars.AZ_SA_MSIX_FILESHARE_NAME }}
         with:
-          azPSVersion: "latest"
+          azPSVersion: "11.1.0"
           inlineScript: |
             $storageContext = New-AzStorageContext -StorageAccountName "$env:AZ_SA_NAME" -EnableFileBackupRequestIntent
             Set-AzStorageFileContent `
