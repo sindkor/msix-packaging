@@ -26,6 +26,6 @@ $templateFile.MsixPackagingToolTemplate.SaveLocation.TemplatePath = $Application
 $templateFile.Save($ApplicationTemplateFilePath)
 Write-Output "XML file updated."
 
-$createPackageCmd = "MsixPackagingTool.exe create-package --template $ApplicationTemplateFilePath -v"
+$createPackageCmd = "MsixPackagingTool.exe create-package --template $ApplicationTemplateFilePath"
 Write-Output "Executing $createPackageCmd"
 Invoke-Expression $createPackageCmd
