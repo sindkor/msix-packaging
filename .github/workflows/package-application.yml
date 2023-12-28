@@ -98,4 +98,5 @@ jobs:
           AZ_SA_MSIX_FILESHARE_NAME: ${{ vars.AZ_SA_MSIX_FILESHARE_NAME }}
           AZCOPY_AUTO_LOGIN_TYPE: "PSCRED"
         run: |
+          azcopy --version
           azcopy copy ".\out\$env:APPLICATION_NAME.msix" "https://$env:AZ_SA_NAME.file.core.windows.net/$env:AZ_SA_MSIX_FILESHARE_NAME/$env:APPLICATION_NAME.msix"
