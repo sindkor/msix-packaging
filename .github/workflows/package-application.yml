@@ -99,5 +99,8 @@ jobs:
         with:
           azPSVersion: "11.1.0"
           inlineScript: |
+            Invoke-WebRequest -Uri 'https://azcopyvnext.azureedge.net/releases/release-10.22.1-20231220/azcopy_windows_amd64_10.22.1.zip' -OutFile 'azcopyv10.zip'
+            $AzCopy = (Expand-archive -Path '.\azcopyv10.zip' -Destinationpath '.\' -PassThru | where-object {$_.Name -eq 'azcopy.exe'}).FullName
+            & $AzCopy --version
             $env:AZCOPY_AUTO_LOGIN_TYPE = "PSCRED"
-            azcopy copy ".\out\$env:APPLICATION_NAME.msix" "https://$env:AZ_SA_NAME.file.core.windows.net/$env:AZ_SA_MSIX_FILESHARE_NAME/$env:APPLICATION_NAME.msix"
+            & $AzCopy copy ".\out\$env:APPLICATION_NAME.msix" "https://$env:AZ_SA_NAME.file.core.windows.net/$env:AZ_SA_MSIX_FILESHARE_NAME/$env:APPLICATION_NAME.msix"
