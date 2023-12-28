@@ -91,16 +91,20 @@ jobs:
       #       --verbose `
       #       ".\out\$env:APPLICATION_NAME.msix"
       - name: Upload MSIX to Azure Files
-        uses: azure/CLI@v1
+        uses: azure/powershell@v1
         env:
           AZ_SA_NAME: ${{ vars.AZ_SA_NAME }}
           AZ_SA_MSIX_FILESHARE_NAME: ${{ vars.AZ_SA_MSIX_FILESHARE_NAME }}
         with:
-          azcliversion: 2.55.0
+          azPSVersion: "11.1.0"
           inlineScript: |
-            az storage file upload \
-            --account-name $AZ_SA_NAME \
-            --auth-mode "login" \
-            --backup-intent --enable-file-backup-request-intent \
-            --path $APPLICATION_NAME.msix \
-            --share-name $AZ_SA_MSIX_FILESHARE_NAME
+            $storageContext = New-AzStorageContext -StorageAccountName "$env:AZ_SA_NAME" -EnableFileBackupRequestIntent -Protocol "Https"
+            Set-AzStorageFileContent `
+              -Context $storageContext `
+              -ShareName "$env:AZ_SA_MSIX_FILESHARE_NAME" `
+              -Source ".\out\$env:APPLICATION_NAME.msix" `
+              -Path "$env:APPLICATION_NAME.msix" `
+              -PreserveSMBAttribute `
+              -Force `
+              -Verbose
+            Start-Sleep 5
