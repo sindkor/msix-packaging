@@ -70,27 +70,27 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           enable-AzPSSession: true
-      # - name: Get access token
-      #   uses: azure/powershell@v1
-      #   with:
-      #     azPSVersion: "11.1.0"
-      #     inlineScript: |
-      #       $token = (Get-AzAccessToken -ResourceTypeName KeyVault).Token 
-      #       Write-Output "::add-mask::$token"
-      #       Write-Output "KV_TOKEN=$token" >> $env:GITHUB_ENV
-      # - name: Sign Application
-      #   shell: pwsh
-      #   env:
-      #     AZ_KV_URL: ${{ vars.AZ_KV_URL }}
-      #     KV_CERT_NAME: ${{ vars.KV_CERT_NAME }}
-      #   run: |
-      #     AzureSignTool.exe sign `
-      #       --azure-key-vault-url "$env:AZ_KV_URL" `
-      #       --azure-key-vault-accesstoken "$env:KV_TOKEN" `
-      #       --azure-key-vault-certificate "$env:KV_CERT_NAME" `
-      #       --file-digest "sha256" `
-      #       --verbose `
-      #       ".\out\$env:APPLICATION_NAME.msix"
+      - name: Get access token
+        uses: azure/powershell@v1
+        with:
+          azPSVersion: "11.1.0"
+          inlineScript: |
+            $token = (Get-AzAccessToken -ResourceTypeName KeyVault).Token 
+            Write-Output "::add-mask::$token"
+            Write-Output "KV_TOKEN=$token" >> $env:GITHUB_ENV
+      - name: Sign Application
+        shell: pwsh
+        env:
+          AZ_KV_URL: ${{ vars.AZ_KV_URL }}
+          KV_CERT_NAME: ${{ vars.KV_CERT_NAME }}
+        run: |
+          AzureSignTool.exe sign `
+            --azure-key-vault-url "$env:AZ_KV_URL" `
+            --azure-key-vault-accesstoken "$env:KV_TOKEN" `
+            --azure-key-vault-certificate "$env:KV_CERT_NAME" `
+            --file-digest "sha256" `
+            --verbose `
+            ".\out\$env:APPLICATION_NAME.msix"
       - name: Upload Package to Azure Files
         uses: azure/powershell@v1
         env:
