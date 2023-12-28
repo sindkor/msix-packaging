@@ -91,21 +91,11 @@ jobs:
       #       --file-digest "sha256" `
       #       --verbose `
       #       ".\out\$env:APPLICATION_NAME.msix"
-      - name: Upload MSIX to Azure Files
-        uses: azure/powershell@v1
+      - name: Upload Package to Azure Files
+        shell: pwsh
         env:
           AZ_SA_NAME: ${{ vars.AZ_SA_NAME }}
           AZ_SA_MSIX_FILESHARE_NAME: ${{ vars.AZ_SA_MSIX_FILESHARE_NAME }}
-        with:
-          azPSVersion: "11.1.0"
-          inlineScript: |
-            $storageContext = New-AzStorageContext -StorageAccountName "$env:AZ_SA_NAME" -EnableFileBackupRequestIntent -Protocol "Https"
-            Set-AzStorageFileContent `
-              -Context $storageContext `
-              -ShareName "$env:AZ_SA_MSIX_FILESHARE_NAME" `
-              -Source ".\out\$env:APPLICATION_NAME.msix" `
-              -Path "$env:APPLICATION_NAME.msix" `
-              -PreserveSMBAttribute `
-              -Force `
-              -Verbose
-            Start-Sleep 5
+          AZCOPY_AUTO_LOGIN_TYPE: "PSCRED"
+        run: |
+          azcopy copy ".\out\$env:APPLICATION_NAME.msix" "https://$env:AZ_SA_NAME.file.core.windows.net/$env:AZ_SA_MSIX_FILESHARE_NAME/$env:APPLICATION_NAME.msix"
