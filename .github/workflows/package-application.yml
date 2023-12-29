@@ -112,4 +112,4 @@ jobs:
             & $AzCopy --version
             $env:AZCOPY_AUTO_LOGIN_TYPE = "PSCRED"
             & $AzCopy copy ".\out\$env:APPLICATION_NAME.msix" "https://$env:AZ_SA_NAME.file.core.windows.net/$env:AZ_SA_MSIX_FILESHARE_NAME/$env:APPLICATION_NAME/$env:APPLICATION_NAME.msix"
-            & $AzCopy copy ".\out\cim\" "https://$env:AZ_SA_NAME.file.core.windows.net/$env:AZ_SA_MSIX_FILESHARE_NAME/$env:APPLICATION_NAME/cim/"
+            & $AzCopy copy --recursive ".\out\cim\" "https://$env:AZ_SA_NAME.file.core.windows.net/$env:AZ_SA_MSIX_FILESHARE_NAME/$env:APPLICATION_NAME/cim/"
