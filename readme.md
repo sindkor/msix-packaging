@@ -21,6 +21,7 @@ The goal of this project is to have a fully automatic package application workfl
 - [X] Uploading application MSIX file to Azure Files
 - [ ] Uploading application MSIX file to Azure Blob
 - [ ] Automatically update public applications when new releases comes
+- [ ] Additionally create an [MSIX image](https://learn.microsoft.com/en-us/azure/virtual-desktop/app-attach-create-msix-image?tabs=cim) from the MSIX package
 
 ### Acknowledgments 
 Uses [vcsjones/AzureSignTool](https://github.com/vcsjones/AzureSignTool). Thanks!
