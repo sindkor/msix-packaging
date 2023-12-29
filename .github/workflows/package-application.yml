@@ -91,9 +91,10 @@ jobs:
             --file-digest "sha256" `
             --verbose `
             ".\out\$env:APPLICATION_NAME.msix"
-      - name: Download MSIXmgr
+      - name: Extract and package MSIX image
         shell: pwsh
         run: |
+          New-Item -ItemType Directory ".\out\cim"
           Invoke-WebRequest -Uri 'https://aka.ms/msixmgr' -OutFile 'msixmgr.zip'
           $MsiMgr = (Expand-archive -Path '.\msixmgr.zip' -Destinationpath '.\' -PassThru | where-object {$_.Name -eq 'msixmgr.exe' -and $_.Directory.Name -eq 'x64'}).FullName
           & $MsiMgr -Unpack -packagePath ".\out\$env:APPLICATION_NAME.msix" -destination ".\out\cim\$env:APPLICATION_NAME.cim" -applyACLs -create -fileType cim -rootDirectory apps
