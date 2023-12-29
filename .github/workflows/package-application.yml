@@ -96,7 +96,7 @@ jobs:
         run: |
           Invoke-WebRequest -Uri 'https://aka.ms/msixmgr' -OutFile 'msixmgr.zip'
           $MsiMgr = (Expand-archive -Path '.\msixmgr.zip' -Destinationpath '.\' -PassThru | where-object {$_.Name -eq 'msixmgr.exe' -and $_.Directory.Name -eq 'x64'}).FullName
-          & $MsiMgr -Unpack -packagePath ".\out\$env:APPLICATION_NAME.msix" -destination ".\out\$env:APPLICATION_NAME.cim" -applyACLs -create -fileType cim -rootDirectory apps
+          & $MsiMgr -Unpack -packagePath ".\out\$env:APPLICATION_NAME.msix" -destination ".\out\cim\$env:APPLICATION_NAME.cim" -applyACLs -create -fileType cim -rootDirectory apps
       - name: Upload Package to Azure Files
         uses: azure/powershell@v1
         env:
@@ -110,5 +110,5 @@ jobs:
             $AzCopy = (Expand-archive -Path '.\azcopyv10.zip' -Destinationpath '.\' -PassThru | where-object {$_.Name -eq 'azcopy.exe'}).FullName
             & $AzCopy --version
             $env:AZCOPY_AUTO_LOGIN_TYPE = "PSCRED"
-            & $AzCopy copy ".\out\$env:APPLICATION_NAME.msix" "https://$env:AZ_SA_NAME.file.core.windows.net/$env:AZ_SA_MSIX_FILESHARE_NAME/$env:APPLICATION_NAME.msix"
-            & $AzCopy copy ".\out\$env:APPLICATION_NAME.cim" "https://$env:AZ_SA_NAME.file.core.windows.net/$env:AZ_SA_MSIX_FILESHARE_NAME/$env:APPLICATION_NAME.cim"
+            & $AzCopy copy ".\out\$env:APPLICATION_NAME.msix" "https://$env:AZ_SA_NAME.file.core.windows.net/$env:AZ_SA_MSIX_FILESHARE_NAME/$env:APPLICATION_NAME/$env:APPLICATION_NAME.msix"
+            & $AzCopy copy ".\out\cim\" "https://$env:AZ_SA_NAME.file.core.windows.net/$env:AZ_SA_MSIX_FILESHARE_NAME/$env:APPLICATION_NAME/cim/"
