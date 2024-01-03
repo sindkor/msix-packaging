@@ -15,6 +15,8 @@ param(
     $Token
 )
 
+$ErrorActionPreference = 'Stop'
+
 mkdir "C:\actions-runner"
 Set-Location "C:\actions-runner"
 
@@ -23,5 +25,5 @@ if((Get-FileHash -Path actions-runner-win-x64.zip -Algorithm SHA256).Hash.ToUppe
 
 Add-Type -AssemblyName System.IO.Compression.FileSystem ; [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD/actions-runner-win-x64.zip", "$PWD")
 
-./config.cmd --url https://github.com/sindkor/msix-packaging --token $Token --ephemeral
-./run.cmd
+Start-Process cmd.exe -Wait -ArgumentList "/c", ".\config.cmd", "--url https://github.com/sindkor/msix-packaging --token $Token --ephemeral --unattended"
+Start-Process cmd.exe -ArgumentList "/c", ".\run.cmd"
